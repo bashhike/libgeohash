@@ -1,4 +1,4 @@
-import sys 
+#!/usr/bin/env python3
 
 # The 32 bit character set to be used in the geohash. 
 _base32 = '0123456789bcdefghjkmnpqrstuvwxyz'
@@ -95,12 +95,17 @@ def bbox(ghash):
 	}
 
 
-def adjacent(ghash, dir):
+def adjacent(ghash, direction):
 	"""
-	Return a adjacent geohash in the specified direction
-	dir: n, s, e, w
+	Return an adjacent geohash in the specified direction. 
+	Returns None if the movement is invalid. 
+	direction: n, s, e, w
 
 	"""
+
+	if ghash is None:
+		return None
+
 	# Based on https://github.com/davetroy/geohash-js
 	neighbour = {
 	    'n': ( 'p0r21436x8zb9dcf5h7kjnmqesgutwvy', 'bc01fg45238967deuvhjyznpkmstqrwx' ),
@@ -115,12 +120,41 @@ def adjacent(ghash, dir):
 	    'w': ( '0145hjnp', '028b'     ),
 	}
 
+	# Check for crossover from north pole to south pole
+	# Return Null/None in that case. 
+	if len(ghash) == 1 and ghash in border['s'][1] and direction == 's':
+		return None
+	if len(ghash) == 1 and ghash in border['n'][1] and direction == 'n':
+		return None
+
 	lastch = ghash[-1]
 	parent = ghash[:-1]
 	gtype = len(ghash)%2
 
 	# Check for edge cases that don't share a common prefix. 
-	if lastch in border[dir][gtype] and parent != '':
-		parent = adjacent(parent, dir)
+	if lastch in border[direction][gtype] and parent != '':
+		parent = adjacent(parent, direction)
 
-	return parent + _base32[neighbour[dir][gtype].index(lastch)]
+	if parent is None:
+		return None
+	return parent + _base32[neighbour[direction][gtype].index(lastch)]
+
+
+def neighbors(ghash):
+	"""
+	Returns all the neighbors of a given geohash.
+	"""
+
+	ret = {}
+	ret['n'] = adjacent(ghash, 'n')
+	ret['s'] = adjacent(ghash, 's')
+	ret['e'] = adjacent(ghash, 'e')
+	ret['w'] = adjacent(ghash, 'w')
+	
+	ret['ne'] = adjacent(ret['n'], 'e')
+	ret['nw'] = adjacent(ret['n'], 'w')
+	ret['se'] = adjacent(ret['s'], 'e')
+	ret['sw'] = adjacent(ret['s'], 'w')
+
+	return ret
+	

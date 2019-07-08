@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from math import radians, cos, sin, asin, sqrt
-from geohash_base import decode, bbox
+from .geohash_base import decode, bbox
 
 # Cell dimensions in meters at the equator based on length of geohash.
 _cell_dimensions = {

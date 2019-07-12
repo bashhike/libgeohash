@@ -158,3 +158,34 @@ def neighbors(ghash):
 
 	return ret
 	
+
+def expand(ghash, n = 1):
+	"""
+	Expand (Include the neighbors) the given geohash recursively n times. 
+	Useful for proximity search. 
+	"""
+	
+	# Find n geohashes in the n and s direction and then expand to e,w from those. 
+	# Northern geohashes in the odd positions and southern in the even positions. 
+	expand_list = [ghash]
+	for i in range(n):
+		if i == 0:
+			expand_list.append(adjacent(expand_list[0], 'n'))
+			expand_list.append(adjacent(expand_list[0], 's'))
+		else:
+			expand_list.append(adjacent(expand_list[-2], 'n'))
+			expand_list.append(adjacent(expand_list[-2], 's'))
+
+	# Expand towards East and West for all elements in expand_list.
+	expanded_ghash = []
+	for ele in expand_list:
+		if ele is not None:
+			expanded_ghash.append(ele)
+			for i in range(n):
+				if i == 0:
+					expanded_ghash.append(adjacent(expanded_ghash[0], 'e'))
+					expanded_ghash.append(adjacent(expanded_ghash[0], 'w'))
+				else:
+					expanded_ghash.append(adjacent(expanded_ghash[-2], 'e'))
+					expanded_ghash.append(adjacent(expanded_ghash[-2], 'w'))
+	return expanded_ghash

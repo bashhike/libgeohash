@@ -84,15 +84,29 @@ def encode(lat, lon, precision = 12):
 	return ghash
 
 
-def bbox(ghash):
-	"""Returns the bounding box of the geohash"""
+def bbox(ghash, coordinates = False):
+	"""
+	Returns the bounding box of the geohash. 
+	coordinates: When this parameter is set True, Returns the bounding box as a 
+	list of coordinates instead of a dictionary.
+	"""
 	lat, lon, lat_err, lon_err = decode(ghash, errors = True)
-	return {
+	bounds = {
 	'n': lat + lat_err, 
 	's': lat - lat_err, 
 	'w': lon - lon_err, 
 	'e': lon + lon_err
 	}
+
+	if coordinates:
+		return [
+		(bounds['s'], bounds['w']), 
+		(bounds['n'], bounds['w']), 
+		(bounds['n'], bounds['e']), 
+		(bounds['s'], bounds['e'])
+		]
+	else:
+		return bounds
 
 
 def adjacent(ghash, direction):
@@ -170,8 +184,8 @@ def expand(ghash, n = 1):
 	expand_list = [ghash]
 	for i in range(n):
 		if i == 0:
-			expand_list.append(adjacent(expand_list[0], 'n'))
-			expand_list.append(adjacent(expand_list[0], 's'))
+			expand_list.append(adjacent(ghash, 'n'))
+			expand_list.append(adjacent(ghash, 's'))
 		else:
 			expand_list.append(adjacent(expand_list[-2], 'n'))
 			expand_list.append(adjacent(expand_list[-2], 's'))
@@ -183,8 +197,8 @@ def expand(ghash, n = 1):
 			expanded_ghash.append(ele)
 			for i in range(n):
 				if i == 0:
-					expanded_ghash.append(adjacent(expanded_ghash[0], 'e'))
-					expanded_ghash.append(adjacent(expanded_ghash[0], 'w'))
+					expanded_ghash.append(adjacent(ele, 'e'))
+					expanded_ghash.append(adjacent(ele, 'w'))
 				else:
 					expanded_ghash.append(adjacent(expanded_ghash[-2], 'e'))
 					expanded_ghash.append(adjacent(expanded_ghash[-2], 'w'))

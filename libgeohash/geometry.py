@@ -13,7 +13,7 @@ def diagonal(a):
 	Returns the length of a diagonal of a rectangle, 
 	given a tuple containing length of the sides. 
 	"""
-	return sqrt(a[0]**2, a[1]**2)
+	return sqrt(a[0]**2 + a[1]**2)
 
 
 def geohash_to_polygon(ghashes):
@@ -54,14 +54,14 @@ def polygon_to_geohash(poly, precision, inner = False):
 
 	# Adding 2, 1 for ceiling and 1 extra just in case 
 	# (Should take care of cases when ghash and the actual boundary just graze through)
-	num_expansions = diagonal_dist//diagonal(dimensions(center_ghash)) + 2
+	num_expansions = int(diagonal_dist//diagonal(dimensions(center_ghash))) + 2
 
 	
 	polygon_bbox_ghashes = expand(center_ghash, n = num_expansions)
 
 	# Sets to collect the geohashes outside and inside the polygon. 
-	outside = {}
-	inside = {}
+	outside = set()
+	inside = set()
 
 	for ghash in polygon_bbox_ghashes:
 		ghash_poly = geohash_to_polygon([ghash])

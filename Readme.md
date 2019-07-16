@@ -3,9 +3,15 @@
 A python library for interacting with [geohashes](https://en.wikipedia.org/wiki/Geohash).  
 
 The library is divided into 3 modules:
-- **geohash_base**: Base functions for interacting with geohashes e.g. `encode`, `decode`, `neighbors`, `bbox` etc. 
-- **distance_metrics**: Distance related functions e.g. `distance`, `dimensions` etc. 
-- **geometry**: Functions for conversion of a polygon to a list of geohash and vice versa. e.g. `polygon_to_geohash`, `geohash_to_polygon`. Useful for approximating geographical regions with geohashes. Makes use of [shapely](https://pypi.org/project/Shapely/) library for geometric calculations.
+- __geohash_base__: Base functions for interacting with geohashes e.g. `encode`, `decode`, `neighbors`, `bbox` etc. 
+- __distance_metrics__: Distance related functions e.g. `distance`, `dimensions` etc. 
+- __geometry__: Functions for conversion of a polygon to a list of geohash and vice versa. e.g. `polygon_to_geohash`, `geohash_to_polygon`. Useful for approximating geographical regions with geohashes. Makes use of [shapely](https://pypi.org/project/Shapely/) library for geometric calculations.
+
+### Installation
+
+Linux and Mac users can install the package via pip. 
+
+`$ pip install libgeohash`
 
 ### Usage
 

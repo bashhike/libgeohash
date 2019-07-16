@@ -7,7 +7,7 @@ def readme():
 setup(
   name = 'libgeohash', 
   packages = find_packages(), 
-  version = '0.1', 
+  version = '0.1.1', 
   license='MIT', 
   description = 'Python library for interacting with geohashes.', 
   long_description = readme(), 
@@ -17,7 +17,7 @@ setup(
   url = 'https://github.com/bashhike/libgeohash', 
   download_url = 'https://github.com/bashhike/libgeohash/archive/0.1.tar.gz', 
   keywords = ['geohash', 'polygon to geohash', 'shapely', 'geohashes'], 
-  install_requires=['shapely', 'math'], 
+  install_requires=['shapely'], 
   classifiers=[
     'Development Status :: 3 - Alpha', 
     'Intended Audience :: Developers',   

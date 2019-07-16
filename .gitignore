@@ -1,2 +1,5 @@
 # Directories containing bytecode.
 __pycache__/
+build/
+dist/
+libgeohash.egg-info/

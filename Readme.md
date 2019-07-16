@@ -2,6 +2,13 @@
 
 A python library for interacting with [geohashes](https://en.wikipedia.org/wiki/Geohash). 
 
+### Features
+
+The library is divided into 3 modules:
+- **geohash_base**: Base functions for interacting with geohashes e.g. `encode`, `decode`, `neighbors`, `bbox`, `expand` etc. 
+- **distance_metrics**: Distance related functions e.g. `distance`, `dimensions` etc. 
+- **geometry**: Functions for conversion of a polygon to a list of geohash and vice versa. e.g. `polygon_to_geohash`, `geohash_to_polygon`. Useful for approximating geographical regions with geohashes. Is not imported by default i.e. while doing `import libgeohash` and needs to be imported separately e.g. `import libgeohash.geometry as geom`. Depends on the [shapely](https://pypi.org/project/Shapely/) library for geometric calculations.
+
 ### Usage
 
 ```python
@@ -28,3 +35,8 @@ A python library for interacting with [geohashes](https://en.wikipedia.org/wiki/
 ```
 
 - For more functions and their usage, please refer to the doc strings. 
+
+### Known issues
+- Fails to approximate a polygon spanning across the [International Date Line](https://en.wikipedia.org/wiki/International_Date_Line) i.e. 180/-180 longitude. Shouldn't be much of a problem since there aren't any geographical entities that actually span across it beacause of the nature of the line itself.  
+
+If you happen to find any other bugs, please report them in the issues section. 

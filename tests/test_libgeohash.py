@@ -1,6 +1,5 @@
 import unittest
 import libgeohash as gh
-import libgeohash.geometry as geom
 
 class TestGeohashBase(unittest.TestCase):
 	"""
@@ -56,13 +55,13 @@ class TestGeohashGeometry(unittest.TestCase):
 	Test geometry metrics. 
 	"""
 	def test_innerapprox(self):
-		self.assertEqual(geom.polygon_to_geohash(geom.geohash_to_polygon('0'), 1, inner = True), ['0'])
+		self.assertEqual(gh.polygon_to_geohash(gh.geohash_to_polygon('0'), 1, inner = True), ['0'])
 		# The test case below tests the conversion of geohash to polygon and vice versa across the international date line. 
 		# This fails since the polygon created by geohash at -180 and 180 are farthest to each other in the mercator projection, 
 		# and the centriod of those comes somewhere near (0,0), but since the haversine distance is across the globe i.e. relatively small, 
 		# expansion of the centroid geohash can't cover those two extreme ends from (0,0)
 
-		# self.assertEqual(set(geom.polygon_to_geohash(geom.geohash_to_polygon(['px', 'r8', 'rb', 'pz', '20', '0p']), 2, inner = True)), 
+		# self.assertEqual(set(gh.polygon_to_geohash(gh.geohash_to_polygon(['px', 'r8', 'rb', 'pz', '20', '0p']), 2, inner = True)), 
 		# 	set(['px', 'r8', 'rb', 'pz', '20', '0p']))
 		
 		
